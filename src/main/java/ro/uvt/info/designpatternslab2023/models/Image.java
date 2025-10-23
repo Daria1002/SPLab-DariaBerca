@@ -1,4 +1,4 @@
-package models;
+package ro.uvt.info.designpatternslab2023.models;
 public class Image {
     private String imageName;
     public Image(String imageName) {

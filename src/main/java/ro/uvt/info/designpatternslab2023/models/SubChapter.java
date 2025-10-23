@@ -1,4 +1,4 @@
-package models;
+package ro.uvt.info.designpatternslab2023.models;
 
 import java.util.ArrayList;
 import java.util.List;

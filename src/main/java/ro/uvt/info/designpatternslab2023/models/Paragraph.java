@@ -1,4 +1,4 @@
-package models;
+package ro.uvt.info.designpatternslab2023.models;
 public class Paragraph {
     private String text;
     public Paragraph(String text) {
