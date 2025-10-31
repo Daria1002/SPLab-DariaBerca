@@ -1,6 +1,5 @@
 package ro.uvt.info.designpatternslab2023;
 
-// Importăm toate clasele de care avem nevoie
 import ro.uvt.info.designpatternslab2023.models.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,25 +7,31 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DesignPatternsLab2023Application {
 
     public static void main(String[] args) {
-        // Linia de mai jos pornește aplicația Spring. O comentăm, cum scrie în laborator.
         // SpringApplication.run(DesignPatternsLab2023Application.class, args);
-        Book discoTitanic = new Book("Disco Titanic");
-        discoTitanic.addAuthor(new Author("Radu Pavel Gheo"));
 
-        // 3. Creăm un capitol
-        int indexChapterOne = discoTitanic.createChapter("Capitolul 1");
-        Chapter chp1 = discoTitanic.getChapter(indexChapterOne);
+        Book noapteBuna = new Book("Noapte buna, copii!");
+        Author rpGheo = new Author("Radu Pavel Gheo");
+        noapteBuna.addAuthor(rpGheo);
 
-        // 4. Creăm un subcapitol
-        int indexSubChapterOne = chp1.createSubChapter("Subcapitolul 1.1");
-        SubChapter scOneOne = chp1.getSubChapter(indexSubChapterOne);
+        Section cap1 = new Section("Capitolul 1");
+        Section cap11 = new Section("Capitolul 1.1");
+        Section cap111 = new Section("Capitolul 1.1.1");
+        Section cap1111 = new Section("Subchapter 1.1.1.1");
 
-        // 5. Adăugăm conținut în subcapitol
-        scOneOne.createNewParagraph("Acesta este un paragraf pentru carte.");
-        scOneOne.createNewImage("imagine_coperta.jpg");
-        scOneOne.createNewTable("Tabelul cu personaje");
+        noapteBuna.addContent(new Paragraph("Multumesc celor care ..."));
+        noapteBuna.addContent(cap1);
 
-        // 6. La final, cerem cărții să se printeze în consolă
-        discoTitanic.print();
+        cap1.add(new Paragraph("Moto capitol"));
+        cap1.add(cap11);
+
+        cap11.add(new Paragraph("Text from subchapter 1.1"));
+        cap11.add(cap111);
+
+        cap111.add(new Paragraph("Text from subchapter 1.1.1"));
+        cap111.add(cap1111);
+
+        cap1111.add(new Image("Image subchapter 1.1.1.1"));
+
+        noapteBuna.print();
     }
 }
