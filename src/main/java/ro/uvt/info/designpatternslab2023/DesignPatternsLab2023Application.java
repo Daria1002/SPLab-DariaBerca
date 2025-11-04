@@ -1,36 +1,31 @@
 package ro.uvt.info.designpatternslab2023;
 
-import ro.uvt.info.designpatternslab2023.models.*;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import ro.uvt.info.designpatternslab2023.difexample.ClientComponent;
+import ro.uvt.info.designpatternslab2023.difexample.SingletonComponent;
+import ro.uvt.info.designpatternslab2023.difexample.TransientComponent;
 
 @SpringBootApplication
 public class DesignPatternsLab2023Application {
 
-    // In fisierul: DesignPatternsLab2023Application.java
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(DesignPatternsLab2023Application.class, args);
 
-        Section cap1 = new Section("Capitolul 1");
-        Paragraph p1 = new Paragraph("Paragraph 1");
-        Paragraph p2 = new Paragraph("Paragraph 2");
-        Paragraph p3 = new Paragraph("Paragraph 3");
-        Paragraph p4 = new Paragraph("Paragraph 4");
+        TransientComponent transientBean = context.getBean(TransientComponent.class);
+        transientBean.operation();
 
-        cap1.add(p1);
-        cap1.add(p2);
-        cap1.add(p3);
-        cap1.add(p4);
+        transientBean = context.getBean(TransientComponent.class);
+        transientBean.operation();
 
-        System.out.println("Printing without Alignment");
-        System.out.println();
-        cap1.print();
-        System.out.println();
+        SingletonComponent singletonBean = context.getBean(SingletonComponent.class);
+        singletonBean.operation();
 
-        p1.setAlignStrategy(new AlignCenter());
-        p2.setAlignStrategy(new AlignRight());
-        p3.setAlignStrategy(new AlignLeft());
+        singletonBean = context.getBean(SingletonComponent.class);
+        singletonBean.operation();
 
-        System.out.println("Printing with Alignment");
-        System.out.println();
-        cap1.print();
+        ClientComponent c = context.getBean(ClientComponent.class);
+        c.operation();
     }
 }
