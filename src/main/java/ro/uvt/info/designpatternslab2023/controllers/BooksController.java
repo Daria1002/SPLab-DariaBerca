@@ -1,23 +1,55 @@
 package ro.uvt.info.designpatternslab2023.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ro.uvt.info.designpatternslab2023.commands.*;
 import ro.uvt.info.designpatternslab2023.models.Book;
+import ro.uvt.info.designpatternslab2023.services.BookService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/books")
 public class BooksController {
 
-    @GetMapping
-    public ResponseEntity<String> getAllBooks() {
-        System.out.println("BooksController: se cer toate cartile...");
-        return new ResponseEntity<>("toate cartile vor fi afisate aici", HttpStatus.OK);
+    private final BookService bookService;
+
+    @Autowired
+    public BooksController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @PostMapping
     public ResponseEntity<String> createBook(@RequestBody Book book) {
-        System.out.println("BooksController: se creeaza o carte...");
-        return new ResponseEntity<>("cartea '" + book.getTitle() + "' va fi creata", HttpStatus.CREATED);
+        Command<Void> command = new AddBookCommand(book, bookService);
+        command.execute();
+        return new ResponseEntity<>("Cartea a fost creată cu succes.", HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Book>> getAllBooks() {
+        Command<List<Book>> command = new GetAllBooksCommand(bookService);
+        List<Book> books = command.execute();
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+        Command<Book> command = new GetBookByIdCommand(bookService, id);
+        Book book = command.execute();
+        if (book != null) {
+            return new ResponseEntity<>(book, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        Command<Void> command = new DeleteBookCommand(bookService, id);
+        command.execute();
+        return new ResponseEntity<>("Cartea a fost ștearsă.", HttpStatus.OK);
     }
 }
