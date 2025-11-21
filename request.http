@@ -1,7 +1,6 @@
 ### 1. Obține toate cărțile (lista ar trebui să fie goală la început)
 GET http://localhost:8080/books
 
-
 ### 2. Adaugă prima carte (Moara cu noroc)
 POST http://localhost:8080/books
 Content-Type: application/json
@@ -14,7 +13,6 @@ Content-Type: application/json
     }
   ]
 }
-
 
 ### 3. Adaugă a doua carte (Baltagul)
 POST http://localhost:8080/books
@@ -29,22 +27,17 @@ Content-Type: application/json
   ]
 }
 
-
 ### 4. Obține din nou toate cărțile (acum ar trebui să fie două)
 GET http://localhost:8080/books
-
 
 ### 5. Obține cartea cu ID-ul 1 (Moara cu noroc)
 GET http://localhost:8080/books/1
 
-
 ### 6. Obține o carte care nu există (ID 99)
 GET http://localhost:8080/books/99
 
-
 ### 7. Șterge cartea cu ID-ul 2 (Baltagul)
 DELETE http://localhost:8080/books/2
-
 
 ### 8. Obține toate cărțile la final (ar trebui să rămână doar una)
 GET http://localhost:8080/books

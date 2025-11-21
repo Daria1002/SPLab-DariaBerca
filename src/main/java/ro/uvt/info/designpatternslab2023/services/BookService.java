@@ -1,39 +1,47 @@
 package ro.uvt.info.designpatternslab2023.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.uvt.info.designpatternslab2023.models.Book;
+import ro.uvt.info.designpatternslab2023.persistence.BookRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Optional;
 
 @Service
 public class BookService {
-    private final List<Book> books = new ArrayList<>();
-    private final AtomicLong idCounter = new AtomicLong();
 
-    public void addBook(Book book) {
-        long newId = idCounter.incrementAndGet();
-        book.setId(newId);
-        books.add(book);
-        System.out.println("BookService: S-a adăugat cartea: " + book);
+    private final BookRepository bookRepository;
+
+    @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public Book addBook(Book book) {
+        return bookRepository.save(book);
     }
 
     public List<Book> getAllBooks() {
-        System.out.println("BookService: Se returnează toate cărțile.");
-        return new ArrayList<>(books);
+        return bookRepository.findAll();
     }
 
     public Book getBookById(Long id) {
-        System.out.println("BookService: Se caută cartea cu ID: " + id);
-        return books.stream()
-                .filter(book -> book.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return bookRepository.findById(id).orElse(null);
     }
 
     public void deleteBook(Long id) {
-        System.out.println("BookService: Se șterge cartea cu ID: " + id);
-        books.removeIf(book -> book.getId().equals(id));
+        bookRepository.deleteById(id);
+    }
+
+    public Book updateBook(Long id, Book bookDetails) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+
+        book.setTitle(bookDetails.getTitle());
+        book.setAuthors(bookDetails.getAuthors());
+        book.setContent(bookDetails.getContent());
+
+        return bookRepository.save(book);
     }
 }
