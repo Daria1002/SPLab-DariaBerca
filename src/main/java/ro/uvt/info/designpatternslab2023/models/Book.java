@@ -1,16 +1,17 @@
 package ro.uvt.info.designpatternslab2023.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import ro.uvt.info.designpatternslab2023.models.BaseElement;
 
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +42,6 @@ public class Book {
         System.out.println("Book: " + title);
         System.out.println("\nAuthors:");
         for (Author author : authors) {
-            // Presupunând că Author are o metodă print sau toString relevantă
             System.out.println("Author: " + author.getName());
         }
         System.out.println();
