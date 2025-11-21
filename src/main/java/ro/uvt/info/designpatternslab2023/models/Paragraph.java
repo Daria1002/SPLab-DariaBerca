@@ -1,20 +1,22 @@
 package ro.uvt.info.designpatternslab2023.models;
 
-public class Paragraph implements Element {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+public class Paragraph extends BaseElement {
     private String text;
+
+    @Transient
     private AlignStrategy alignStrategy;
 
     public Paragraph(String text) {
         this.text = text;
         this.alignStrategy = null;
-    }
-
-    public void setAlignStrategy(AlignStrategy alignStrategy) {
-        this.alignStrategy = alignStrategy;
-    }
-
-    public String getText() {
-        return this.text;
     }
 
     @Override
@@ -26,12 +28,6 @@ public class Paragraph implements Element {
         }
     }
 
-    @Override
-    public void add(Element element) { /* Nu e suportat */ }
-
-    @Override
-    public void remove(Element element) { /* Nu e suportat */ }
-
-    @Override
-    public Element get(int index) { /* Nu e suportat */ return null; }
+    // Metodele add, remove, get sunt acum moștenite din BaseElement,
+    // deci nu mai este nevoie să le scriem aici.
 }

@@ -1,6 +1,13 @@
 package ro.uvt.info.designpatternslab2023.models;
 
-public class Image implements Element {
+import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+public class Image extends BaseElement {
     private String imageName;
 
     public Image(String imageName) {
@@ -12,12 +19,4 @@ public class Image implements Element {
         System.out.println("Image with name: " + this.imageName);
     }
 
-    @Override
-    public void add(Element element) { /* Nu e suportat */ }
-
-    @Override
-    public void remove(Element element) { /* Nu e suportat */ }
-
-    @Override
-    public Element get(int index) { /* Nu e suportat */ return null; }
 }

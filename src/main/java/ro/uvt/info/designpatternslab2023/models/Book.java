@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import ro.uvt.info.designpatternslab2023.models.BaseElement;
 
 @Entity
 @Data
@@ -20,6 +21,9 @@ public class Book {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Author> authors = new ArrayList<>();
 
+    @OneToMany(targetEntity = BaseElement.class, cascade = CascadeType.ALL)
+    private List<Element> content = new ArrayList<>();
+
 
     public Book(String title) {
         this.title = title;
@@ -27,5 +31,22 @@ public class Book {
 
     public void addAuthor(Author author) {
         this.authors.add(author);
+    }
+
+    public void addContent(Element element) {
+        this.content.add(element);
+    }
+
+    public void print() {
+        System.out.println("Book: " + title);
+        System.out.println("\nAuthors:");
+        for (Author author : authors) {
+            // Presupunând că Author are o metodă print sau toString relevantă
+            System.out.println("Author: " + author.getName());
+        }
+        System.out.println();
+        for (Element element : content) {
+            element.print();
+        }
     }
 }
