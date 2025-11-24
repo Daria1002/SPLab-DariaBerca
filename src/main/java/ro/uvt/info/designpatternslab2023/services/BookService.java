@@ -3,18 +3,17 @@ package ro.uvt.info.designpatternslab2023.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.uvt.info.designpatternslab2023.models.Book;
-import ro.uvt.info.designpatternslab2023.persistence.BookRepository;
+import ro.uvt.info.designpatternslab2023.repository.CrudRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
 
-    private final BookRepository bookRepository;
+    private final CrudRepository<Book, Long> bookRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(CrudRepository<Book, Long> bookRepository) {
         this.bookRepository = bookRepository;
     }
 
